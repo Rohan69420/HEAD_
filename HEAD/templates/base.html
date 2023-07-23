@@ -1,0 +1,14 @@
+<!--templates/base.html-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title> {% block title%} HEAD {% endblock %} </title>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>
