@@ -18,11 +18,15 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 from django.contrib.auth import views as auth_views
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('HEAD.apps.public.urls')),
     path('accounts/',include('HEAD.apps.accounts.urls')),
+    path('table',views.show_tables),
 ]
+urlpatterns += staticfiles_urlpatterns()
 
 #path('accounts/', include('django.contrib.auth.urls'))

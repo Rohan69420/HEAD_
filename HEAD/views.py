@@ -3,6 +3,9 @@ from django.template import loader
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from HEAD.apps.students.models import StudentData
+
+
 
 def index(request):
     print(request.user)
@@ -15,6 +18,10 @@ def about(request):
 
 def contact(request):
     return render(request, 'contact.html')
+
+def show_tables(request):
+    stdData = StudentData.objects.all()
+    return render(request,'tables.html',{'stdData':stdData})
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'accounts/profile.html'
