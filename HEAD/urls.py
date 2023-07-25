@@ -26,6 +26,7 @@ urlpatterns = [
     path('', include('HEAD.apps.public.urls')),
     path('accounts/',include('HEAD.apps.accounts.urls')),
     path('table',views.show_tables),
+    path('update',views.update_status),
 ]
 urlpatterns += staticfiles_urlpatterns()
 

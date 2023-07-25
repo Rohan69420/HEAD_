@@ -4,8 +4,11 @@ from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from HEAD.apps.students.models import StudentData
+from .forms import UpdateForm
 
-
+def update_status(request):
+    stdData=StudentData.objects.all()
+    return render(request,'blank.html',{'stdData':stdData})
 
 def index(request):
     print(request.user)
