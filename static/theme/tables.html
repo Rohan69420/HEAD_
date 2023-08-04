@@ -27,9 +27,10 @@
     <!-- Custom styles for this template -->
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet" />
 
-    <!-- Custom styles for this page -->
+
+    <!-- NEW CUSTOM STYLE FOR THE DATATABLE-->
     <link
-      href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}"
+      href="{% static 'vendor/datatables/jquery.newdataTables.min.css' %}"
       rel="stylesheet"
     />
   </head>
@@ -45,7 +46,7 @@
         <!-- Sidebar - Brand -->
         <a
           class="sidebar-brand d-flex align-items-center justify-content-center"
-          href="{% static 'index.html' %}"
+          href="dashboard"
         >
           <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
@@ -58,7 +59,7 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item">
-          <a class="nav-link" href="{% static 'index.html' %}">
+          <a class="nav-link" href="dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a
           >
@@ -111,7 +112,7 @@
         <hr class="sidebar-divider" />
 
         <!-- Heading -->
-        <div class="sidebar-heading">Addons</div>
+        <div class="sidebar-heading">Pages</div>
 
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
@@ -155,13 +156,13 @@
           </div>
         </li>
 
-        <!-- Nav Item - Charts -->
+        <!-- Nav Item - Charts
         <li class="nav-item">
           <a class="nav-link" href="{% static 'charts.html' %}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Charts</span></a
           >
-        </li>
+        </li> -->
 
         <!-- Nav Item - Tables -->
         <li class="nav-item active">
@@ -437,7 +438,7 @@
                   aria-expanded="false"
                 >
                   <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-                    >{{user.get_full_name}}{{user.username}}</span
+                    >{{user.get_full_name}} ({{user.username}})</span
                   >
                   <img
                     class="img-profile rounded-circle"
@@ -482,9 +483,10 @@
           <!-- Begin Page Content -->
           <div class="container-fluid">
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+            <h1 class="h3 mb-2 text-gray-800">Entries Database</h1>
             <p class="mb-4">
-              Here the teacher or admin can search and filter the entries.
+              View or filter the students that have requested or received
+              recommendation application under you.
             </p>
 
             <!-- DataTales Example -->
@@ -495,7 +497,7 @@
                 </h6>
               </div>
               <div class="card-body">
-                <div class="table-responsive">
+                <!-- <div class="table-responsive">
                   <table
                     class="table table-bordered"
                     id="dataTable"
@@ -523,7 +525,7 @@
                       </tr>
                     </tfoot>
                     <tbody>
-                      {% for n in stdData%}
+                      {% for n in stdData%} {% if n.professor.name == user.get_full_name %}
                       <tr>
                         <td>{{n.name}}</td>
                         <td>{{n.university}}</td>
@@ -532,10 +534,59 @@
                         <td>{{n.date}}</td>
                         <td>{{n.status}}</td>
                       </tr>
-                      {% endfor %}
+                      {% endif %} {% endfor %}
                     </tbody>
                   </table>
+                </div> -->
+
+                <!-- Testing table-->
+                <div class="table-responsive">
+                  <table
+                    id="example"
+                    style="width: 100%"
+                    class="table table-bordered"
+                    id="newdataTable"
+                    width="100%"
+                    cellspacing="0"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>University</th>
+                        <th>Professor</th>
+                        <th>Age</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Scholarship</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for n in stdData%} {% if n.professor.name == user.get_full_name %}
+                      <tr>
+                        <td>{{n.name}}</td>
+                        <td>{{n.university}}</td>
+                        <td>{{n.professor}}</td>
+                        <td>{{n.age}}</td>
+                        <td>{{n.date}}</td>
+                        <td>{{n.status}}</td>
+                        <td>None</td>
+                      </tr>
+                      {% endif %} {% endfor %}
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Office</th>
+                        <th>Age</th>
+                        <th>Start date</th>
+                        <th>Salary</th>
+                        <th>Scholarship</th>
+                      </tr>
+                    </tfoot>
+                  </table>
                 </div>
+                <!--End testing table-->
               </div>
             </div>
           </div>
@@ -595,9 +646,7 @@
             >
               Cancel
             </button>
-            <a class="btn btn-primary" href="{% static 'login.html' %}"
-              >Logout</a
-            >
+            <a class="btn btn-primary" href="accounts/logout">Logout</a>
           </div>
         </div>
       </div>
@@ -614,10 +663,13 @@
     <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
 
     <!-- Page level plugins -->
-    <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+    <!-- NEW PAGE LEVEL PLUGINS-->
+    <script src="{% static 'vendor/datatables/jquery-3.7.0.js' %}"></script>
+    <script src="{% static 'vendor/datatables/jquery.newdataTables.min.js' %}"></script>
+
+    <!--NEW DATA TABLE JS-->
+    <script src="{% static 'js/demo/new-datatable-demo.js' %}"></script>
   </body>
 </html>

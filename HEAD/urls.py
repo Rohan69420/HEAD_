@@ -27,6 +27,8 @@ urlpatterns = [
     path('accounts/',include('HEAD.apps.accounts.urls')),
     path('table',views.show_tables),
     path('update',views.update_status),
+    path('dashboard',views.DashboardView.as_view(),name="dashboard"),
+    path('newlogin',include('django.contrib.auth.urls')),
 ]
 urlpatterns += staticfiles_urlpatterns()
 
