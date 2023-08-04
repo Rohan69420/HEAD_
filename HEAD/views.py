@@ -1,6 +1,6 @@
 from django.http import HttpRequest,HttpResponseRedirect
 from django.template import loader
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from HEAD.apps.students.models import StudentData
@@ -11,7 +11,19 @@ from django.contrib.auth import authenticate,login, logout
 from django.contrib import messages
 
 def user_authentication_login(request):
-    return render(request, "login.html",{})
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user=authenticate(request,username=username,password=password)
+
+        if user is not None:
+            login(request,user)
+            return redirect('dashboard')
+        else:
+            messages.success(request, ("There was an error loggin in. Try Again"))
+            return redirect('newlogin')
+    else:
+        return render(request, "login.html",{})
 
 def update_status(request):
     stdData = StudentData.objects.all().values()
