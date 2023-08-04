@@ -6,4 +6,4 @@ from HEAD.apps.students.models import StudentData
 class UpdateForm(ModelForm):
     class Meta:
         model = StudentData
-        fields = ('name', 'university','date','status')
+        fields = ('name','university','date','status')

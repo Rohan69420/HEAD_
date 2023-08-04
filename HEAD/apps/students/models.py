@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+
 # Create your models here.
 class ProfessorData(models.Model):
     name = models.CharField(max_length=24, null=True)
@@ -20,6 +21,8 @@ class StatusData(models.Model):
         return self.name
 
 class StudentData(models.Model):
+   
+		
     name = models.CharField(max_length=64, unique=True)
     university = models.ForeignKey(UniversityData, on_delete=models.SET_NULL, null=True)
     professor = models.ForeignKey(ProfessorData,on_delete=models.SET_NULL,null=True)

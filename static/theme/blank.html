@@ -365,7 +365,7 @@
 
                 </div>
 
-                <div class="container">
+                <!-- <div class="container">
                     <form action="action_page.php">
                       <div class="row">
                         <div class="col-25">
@@ -408,7 +408,18 @@
                         <input type="submit" value="Submit">
                       </div>
                     </form>
-                  </div>
+                  </div> -->
+                <div class="containter">
+                    <form  action="" method="post">
+                        {% csrf_token %}
+                        <table >
+                          {{ form.as_table }}
+                        </table>
+                        <br>
+                        <input type="submit" value="Submit" class="px-5 py-2 ml-3 font-semibold rounded-full dark:bg-gray-400 dark:text-gray-800"/>
+          
+                    </form>
+                </div>
 
                 <!-- /.container-fluid -->
 
