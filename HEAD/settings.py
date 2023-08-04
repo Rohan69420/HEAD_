@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "HEAD.apps.accounts",
     "HEAD.apps.students",
 ]
 
@@ -129,6 +128,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static/theme/")]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGIN_URL = "accounts:login"
-LOGIN_REDIRECT_URL = "public:index"
-LOGOUT_REDIRECT_URL = "accounts:login"
+LOGIN_URL = "newlogin"
+LOGIN_REDIRECT_URL = "dashboard"
+LOGOUT_REDIRECT_URL = "newlogin"
