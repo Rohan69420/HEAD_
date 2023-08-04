@@ -29,6 +29,7 @@ urlpatterns = [
     path('update',views.update_status),
     path('dashboard',views.DashboardView.as_view(),name="dashboard"),
     path('newlogin',include('django.contrib.auth.urls')),
+    path('newlogin/login',views.user_authentication_login,name="newlogin"),
 ]
 urlpatterns += staticfiles_urlpatterns()
 

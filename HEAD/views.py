@@ -10,6 +10,8 @@ from django.urls import reverse
 from django.contrib.auth import authenticate,login, logout
 from django.contrib import messages
 
+def user_authentication_login(request):
+    return render(request, "login.html",{})
 
 def update_status(request):
     stdData = StudentData.objects.all().values()
