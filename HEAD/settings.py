@@ -28,7 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+#adding custom user model
+AUTH_USER_MODEL = "students.User"
 # Application definition
 
 INSTALLED_APPS = [
