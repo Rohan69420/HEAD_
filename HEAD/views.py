@@ -10,6 +10,9 @@ from django.urls import reverse
 from django.contrib.auth import authenticate,login, logout
 from django.contrib import messages
 
+def errorPageHandler(request, exception):
+    return render(request,'404.html',status=404)
+
 def user_authentication_login(request):
     if request.method == "POST":
         username = request.POST["username"]
@@ -82,5 +85,8 @@ def show_tables(request):
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = "accounts/profile.html"
 
-class DashboardView(LoginRequiredMixin, TemplateView):
-    template_name = "index.html"
+def DashboardView(request):
+    if request.user.is_authenticated:
+        return render(request,"index.html",{})
+    else:
+        return redirect('newlogin')
