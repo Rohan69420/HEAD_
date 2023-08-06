@@ -65,4 +65,4 @@ class studentStatus(models.Model):
     )
 
     def __str__(self):
-        return self.name
+        return self.student.username

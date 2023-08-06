@@ -35,7 +35,11 @@ def update_status(request):
     if request.user.is_authenticated:
         if PrivilegeChecker(request, "Student"):
             stdData = StudentData.objects.all().values()
-            current_user_status = studentStatus.objects.get(student = request.user)
+            if not studentStatus.objects.filter(student = request.user).exists():
+                 current_user_status = studentStatus(student = request.user )
+                 current_user_status.save()
+            else:
+                current_user_status = studentStatus.objects.get(student = request.user)
             form = UpdateStatusForm(request.POST or None, instance=current_user_status)
             if form.is_valid():
                 form.save()
