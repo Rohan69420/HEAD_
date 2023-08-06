@@ -24,13 +24,14 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.DashboardView),
-    path('accounts/',include('HEAD.apps.accounts.urls')),
     path('table',views.show_tables,name='table'),
     path('update',views.update_status,name='update'),
     path('dashboard',views.DashboardView,name="dashboard"),
     path('newlogin',include('django.contrib.auth.urls')),
     path('newlogin/login',views.user_authentication_login,name="newlogin"),
-    path('logout',auth_views.LogoutView.as_view(),name='newlogout')
+    path('logout',auth_views.LogoutView.as_view(),name='newlogout'),
+    path('error404',views.show404,name="error404"),
+    path('reset',views.passwordReset,name="reset")
 ]
 urlpatterns += staticfiles_urlpatterns()
 
