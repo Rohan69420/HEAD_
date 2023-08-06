@@ -3,9 +3,9 @@ from django.template import loader
 from django.shortcuts import render, redirect
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from HEAD.apps.students.models import StudentData
+from HEAD.apps.students.models import StudentData,studentStatus
 from django.contrib.auth.decorators import login_required
-from .forms import UpdateForm
+from .forms import UpdateForm,UpdateStatusForm
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -35,45 +35,14 @@ def update_status(request):
     if request.user.is_authenticated:
         if PrivilegeChecker(request, "Student"):
             stdData = StudentData.objects.all().values()
-            if request.method == "GET":
-                form = UpdateForm()
-                return render(
-                    request,
-                    "blank.html",
-                    {
-                        "stdData": stdData,
-                        "group": request.user.groups.all().values()[0]["name"],
-                        "form": form,
-                    },
-                )
+            current_user_status = studentStatus.objects.get(student = request.user)
+            form = UpdateStatusForm(request.POST or None, instance=current_user_status)
+            if form.is_valid():
+                form.save()
+                return render(request, 'blank.html', {'form':form})
             else:
-                form = UpdateForm(request.POST)
-                # print(stdData)
-                print("            ")
-                form.is_valid()
-                data = form
-                for n in stdData:
-                    # print(n['id'])
-
-                    if n["id"] == request.user.id:
-                        hamroUser = StudentData.objects.get(pk=n["id"])
-                        # print(data["status"])
-                        hamroUser.status_id = int(request.POST["status"])
-                        print(type(request.POST["status"]))
-                        # options = ["Pending","Accepted","Rejected","Unverified"]
-                        # gotData = options[request.POST["status"] - 1]
-                        # hamroUser.status = gotData
-
-                        print(hamroUser.status_id)
-                        hamroUser.save()
-            return render(
-                request,
-                "blank.html",
-                {
-                    "stdData": stdData,
-                    "group": request.user.groups.all().values()[0]["name"],
-                },
-            )
+                return render(request, 'blank.html', {'form':form})
+            
         else:
             return HttpResponseRedirect(reverse('error404'))
     else:
@@ -103,12 +72,13 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
 
 def DashboardView(request):
-    # print(request.user.groups.all().values()[0]['name'])
+    print("Hello")
+    print(request.user.groups.all().values())
     if request.user.is_authenticated:
         return render(
             request,
             "index.html",
-            {"group": request.user.groups.all().values()[0]["name"]},
+           {"group": request.user.groups.all().values()[0]["name"]},
         )
     else:
         return redirect("newlogin")
