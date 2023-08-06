@@ -29,33 +29,35 @@ def user_authentication_login(request):
         return render(request, "login.html",{})
 
 def update_status(request):
-    stdData = StudentData.objects.all().values()
-    if request.method == "GET":
-        form = UpdateForm()
-        return render(request, "blank.html", {"stdData": stdData, "form": form})
-    else:
-        form = UpdateForm(request.POST)
-        # print(stdData)
-        print("            ")
-        form.is_valid()
-        data = form
-        for n in stdData:
-           # print(n['id'])
+    if request.user.is_authenticated:
+        stdData = StudentData.objects.all().values()
+        if request.method == "GET":
+            form = UpdateForm()
+            return render(request, "blank.html", {"stdData": stdData,"group":request.user.groups.all().values()[0]['name'],"form":form})
+        else:
+            form = UpdateForm(request.POST)
+            # print(stdData)
+            print("            ")
+            form.is_valid()
+            data = form
+            for n in stdData:
+            # print(n['id'])
            
             
-            if n['id'] == request.user.id:
-                hamroUser = StudentData.objects.get(pk = n["id"])
-                #print(data["status"])
-                hamroUser.status_id = int(request.POST["status"])
-                print(type(request.POST["status"]))
-                #options = ["Pending","Accepted","Rejected","Unverified"]
-                #gotData = options[request.POST["status"] - 1]
-                #hamroUser.status = gotData
+                if n['id'] == request.user.id:
+                    hamroUser = StudentData.objects.get(pk = n["id"])
+                    #print(data["status"])
+                    hamroUser.status_id = int(request.POST["status"])
+                    print(type(request.POST["status"]))
+                    #options = ["Pending","Accepted","Rejected","Unverified"]
+                    #gotData = options[request.POST["status"] - 1]
+                    #hamroUser.status = gotData
 
-                print(hamroUser.status_id)
-                hamroUser.save()
-        return render(request, "blank.html", {"stdData": stdData})
-
+                    print(hamroUser.status_id)
+                    hamroUser.save()
+        return render(request, "blank.html", {"stdData": stdData,"group":request.user.groups.all().values()[0]['name']})
+    else:
+        return HttpResponseRedirect(reverse('newlogin'))
 
 def index(request):
     print(request.user)
@@ -73,20 +75,20 @@ def contact(request):
 
 
 def show_tables(request):
-    if not request.user.is_authenticated: #if the user is not authenticated
-        return HttpResponseRedirect(reverse("accounts:login")) #redirect to login page
-    else:
+    if request.user.is_authenticated:
         stdData = StudentData.objects.all()
-        #print(type(stdData[0].professor.name))
-        #print("----------------------------------------")
-        return render(request, "tables.html", {"stdData": stdData})
+        return render(request, "tables.html", {"stdData": stdData,"group":request.user.groups.all().values()[0]['name']})
+    else:
+        return HttpResponseRedirect(reverse("accounts:login")) #redirect to login page
+    
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = "accounts/profile.html"
 
 def DashboardView(request):
+    #print(request.user.groups.all().values()[0]['name'])
     if request.user.is_authenticated:
-        return render(request,"index.html",{})
+        return render(request,"index.html",{'group':request.user.groups.all().values()[0]['name']})
     else:
         return redirect('newlogin')
