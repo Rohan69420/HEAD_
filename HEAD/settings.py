@@ -24,9 +24,9 @@ PROJECT_DIR = Path(__file__).resolve().parent
 SECRET_KEY = "django-insecure--emq89lz76bn32hh@4j*^r3jd&gn*=1m6o3vaqx-(7@wt^6i_n"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -132,4 +132,4 @@ LOGIN_URL = "newlogin"
 LOGIN_REDIRECT_URL = "dashboard"
 LOGOUT_REDIRECT_URL = "newlogin"
 
-handler404 = 'HEAD.views.errorPageHandler'
+handler404 = "HEAD.views.errorPageHandler"
