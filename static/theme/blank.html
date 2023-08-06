@@ -93,6 +93,8 @@
           </div>
         </li>
 
+        
+        {% if group != 'Student' %}
         <!-- Nav Item - Tables -->
         <li class="nav-item">
           <a class="nav-link" href="{% url 'table' %}">
@@ -100,7 +102,9 @@
             <span>Tables</span></a
           >
         </li>
+        {% endif %}
 
+        {% if group != 'Teacher' %}
         <!-- Nav Item Update-->
         <li class="nav-item">
           <a class="nav-link" href="{% url 'update' %}">
@@ -108,6 +112,7 @@
             <span>Update</span></a
           >
         </li>
+        {% endif %}
        
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block" />
