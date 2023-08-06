@@ -58,7 +58,6 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
             os.path.join(BASE_DIR, "static\\theme"),
-            os.path.join(PROJECT_DIR, "templates"),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -132,4 +131,4 @@ LOGIN_URL = "newlogin"
 LOGIN_REDIRECT_URL = "dashboard"
 LOGOUT_REDIRECT_URL = "newlogin"
 
-handler404 = "HEAD.views.errorPageHandler"
+handler404 = "HEAD.views.error404"
