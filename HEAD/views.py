@@ -5,11 +5,12 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from HEAD.apps.students.models import StudentData,studentStatus
 from django.contrib.auth.decorators import login_required
-from .forms import UpdateForm,UpdateStatusForm
+from .forms import UpdateForm,UpdateStatusForm,AddNewUserForm
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-
+from django.contrib.auth.models import User
+from django.http import HttpResponse
 
 # def errorPageHandler(request, exception):
 #     return render(request, "404.html", status=404)
@@ -96,6 +97,35 @@ def PrivilegeChecker(request, group):
         return False
         print("Error404")
         return HttpResponseRedirect(reverse("error404"))
+
+
+#admin adding new user
+def admin_add_user(request):
+    if request.user.is_authenticated:
+        if PrivilegeChecker(request, "Admin"):
+                if request.method == "GET":
+                        form = AddNewUserForm()
+                        return render(request, 'addUser.html', {'form':form})
+                else :
+                        form = AddNewUserForm(request.POST)
+                        print(form.errors.as_data())
+                        if form.is_valid():
+                            form_data = form.cleaned_data
+
+                            new_user = User.objects.create(
+                                username=form_data["username"],
+                                email=form_data["email"],
+                            )
+                            new_user.set_password("default123")
+                            new_user.groups.add(form_data["group"])
+                            new_user.save()
+                            return render(request, 'addUser.html', {'form':form})
+                        else:
+                            return HttpResponse(str(form.errors), status=400)                                                       
+        else:
+            return HttpResponseRedirect(reverse('error404'))
+    else:
+        return HttpResponseRedirect(reverse("newlogin"))
 
 
 # 404 error
