@@ -31,7 +31,10 @@ urlpatterns = [
     path('newlogin/login',views.user_authentication_login,name="newlogin"),
     path('logout',auth_views.LogoutView.as_view(),name='newlogout'),
     path('error404',views.show404,name="error404"),
-    path('reset',views.passwordReset,name="reset")
+    path('reset',views.passwordReset,name="reset"),
+    path('adduser',views.admin_add_user,name='adduser'),
+    
+
 ]
 urlpatterns += staticfiles_urlpatterns()
 
