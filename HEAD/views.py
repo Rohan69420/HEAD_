@@ -3,9 +3,9 @@ from django.template import loader
 from django.shortcuts import render, redirect
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from HEAD.apps.students.models import StudentData,studentStatus
+from HEAD.apps.students.models import StudentData
 from django.contrib.auth.decorators import login_required
-from .forms import UpdateForm,UpdateStatusForm
+from .forms import UpdateForm
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -35,12 +35,12 @@ def update_status(request):
     if request.user.is_authenticated:
         if PrivilegeChecker(request, "Student"):
             stdData = StudentData.objects.all().values()
-            if not studentStatus.objects.filter(student = request.user).exists():
-                 current_user_status = studentStatus(student = request.user )
+            if not StudentData.objects.filter(student = request.user).exists():
+                 current_user_status = StudentData(student = request.user )
                  current_user_status.save()
             else:
-                current_user_status = studentStatus.objects.get(student = request.user)
-            form = UpdateStatusForm(request.POST or None, instance=current_user_status)
+                current_user_status = StudentData.objects.get(student = request.user)
+            form = UpdateForm(request.POST or None, instance=current_user_status)
             if form.is_valid():
                 form.save()
                 return render(request, 'blank.html', {'form':form})
