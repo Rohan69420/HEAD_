@@ -323,7 +323,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      {% for n in stdData%} {% if n.professor.name == user.get_full_name %}
+                      {% for n in stdData%} {% if n.professor.name == user.get_full_name or group == "Admin"  %}
                       <tr>
                         <td>{{n.name}}</td>
                         <td>{{n.university}}</td>
