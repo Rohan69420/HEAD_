@@ -120,6 +120,18 @@
         </li>
         {% endif %}
 
+        {% if group == 'Admin' %}
+        <!-- Nav Item Update-->
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'adduser' %}">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Add User</span></a
+          >
+        </li>
+        {% endif %}
+
+        
+
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block" />
 
