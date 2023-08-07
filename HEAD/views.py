@@ -95,11 +95,8 @@ def show_tables(request):
         else:
             return HttpResponseRedirect(reverse('error404'))
     else:
-        return HttpResponseRedirect(reverse("accounts:login"))  # redirect to login page
+        return HttpResponseRedirect(reverse("newlogin"))  # redirect to login page
 
-
-class ProfileView(LoginRequiredMixin, TemplateView):
-    template_name = "accounts/profile.html"
 
 
 def DashboardView(request):
