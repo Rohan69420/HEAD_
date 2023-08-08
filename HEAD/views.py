@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect,HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect
-from HEAD.apps.students.models import StudentData
+from HEAD.students.models import StudentData
 from django.contrib.auth.decorators import login_required
 from .forms import UpdateForm, AddNewUserForm
 from django.urls import reverse
@@ -42,9 +42,9 @@ def update_status(request):
             form = UpdateForm(request.POST or None, instance=current_user_status)
             if form.is_valid():
                 form.save()
-                return render(request, 'blank.html', {'form':form})
+                return render(request, 'blank.html', {'form':form,'group':request.user.groups.all().values()[0]["name"]})
             else:
-                return render(request, 'blank.html', {'form':form})
+                return render(request, 'blank.html', {'form':form,'group':request.user.groups.all().values()[0]["name"]})
             
         else:
             return HttpResponseRedirect(reverse('error404'))
