@@ -40,7 +40,7 @@ urlpatterns = [
     
 
 ]
-urlpatterns += staticfiles_urlpatterns()
+#urlpatterns += staticfiles_urlpatterns()
 
 # add at the last
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
