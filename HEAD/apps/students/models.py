@@ -27,7 +27,7 @@ class StatusData(models.Model):
 
 
 class StudentData(models.Model):
-    name = models.CharField(max_length=64, unique=True, null=False)
+    name = models.CharField(max_length=64, unique=True, null=True)
     student = models.ForeignKey(
         User,
         on_delete=models.CASCADE,null=True
