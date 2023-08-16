@@ -90,3 +90,6 @@ db.sqlite3
 
 #the virtual env
 HEAD-env
+
+#environment files 
+.env

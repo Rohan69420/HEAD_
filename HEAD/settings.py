@@ -9,9 +9,15 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
-from pathlib import Path
+# loading environment variables
 import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +32,8 @@ SECRET_KEY = "django-insecure--emq89lz76bn32hh@4j*^r3jd&gn*=1m6o3vaqx-(7@wt^6i_n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh','127.0.0.1']
+#ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,7 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "HEAD.apps.students",
+    "HEAD.students",
 ]
 
 MIDDLEWARE = [
@@ -57,7 +64,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.join(BASE_DIR, "static\\theme"),
+            os.path.join(BASE_DIR, "static"),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -87,13 +94,14 @@ WSGI_APPLICATION = "HEAD.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'head_data',
-        'USER': 'postgres',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.environ.get("DB_NAME"),
+        'USER': os.environ.get("DB_USER"),
+        'PASSWORD': os.environ.get("DB_PASSWORD"),
+        'HOST': os.environ.get("DB_HOST"),
+        'PORT': os.environ.get("DB_PORT"),
     }
 }
+
 
 
 # Password validation
@@ -130,8 +138,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/theme/"
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static/theme/")]
+STATIC_URL = "static/"
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
