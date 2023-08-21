@@ -58,7 +58,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
+CSRF_TRUSTED_ORIGINS = ['*']
 ROOT_URLCONF = "HEAD.urls"
 
 TEMPLATES = [
@@ -154,4 +154,3 @@ LOGOUT_REDIRECT_URL = "newlogin"
 
 handler404 = "HEAD.views.error404"
 
-CSRF_TRUSTED_ORIGINS = ['https://web-production-ea40.up.railway.app/']
