@@ -153,3 +153,5 @@ LOGIN_REDIRECT_URL = "dashboard"
 LOGOUT_REDIRECT_URL = "newlogin"
 
 handler404 = "HEAD.views.error404"
+
+CSRF_TRUSTED_ORIGINS = ['https://web-production-ea40.up.railway.app/']
