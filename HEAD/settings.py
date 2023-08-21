@@ -12,9 +12,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 # loading environment variables
 import os
 from pathlib import Path
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
+from decouple import config
 
 
 
@@ -32,7 +33,7 @@ SECRET_KEY = "django-insecure--emq89lz76bn32hh@4j*^r3jd&gn*=1m6o3vaqx-(7@wt^6i_n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app', '.now.sh']
+ALLOWED_HOSTS = ['*', '.now.sh','127.0.0.1']
 #ALLOWED_HOSTS = ['*']
 
 
@@ -57,6 +58,9 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+CSRF_TRUSTED_ORIGINS = ['https://web-production-ea40.up.railway.app']
+
 
 ROOT_URLCONF = "HEAD.urls"
 
@@ -84,16 +88,24 @@ WSGI_APPLICATION = "HEAD.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get("DB_NAME"),
-        'USER': os.environ.get("DB_USER"),
-        'PASSWORD': os.environ.get("DB_PASSWORD"),
-        'HOST': os.environ.get("DB_HOST"),
-        'PORT': os.environ.get("DB_PORT"),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT':config('DB_PORT')
     }
 }
+
 
 
 # Password validation
@@ -144,3 +156,4 @@ LOGIN_REDIRECT_URL = "dashboard"
 LOGOUT_REDIRECT_URL = "newlogin"
 
 handler404 = "HEAD.views.error404"
+
